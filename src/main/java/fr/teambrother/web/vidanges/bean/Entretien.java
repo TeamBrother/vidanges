@@ -1,16 +1,16 @@
 package fr.teambrother.web.vidanges.bean;
 
+import java.util.Date;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Voiture {
+public class Entretien {
 
 	private Long id;
-	private String couleur;
-	private String marque;
-	private String modele;
-	private String proprietaire;
+	private Date date;
+	private Long idVoiture;
 
 }

@@ -5,7 +5,6 @@ package fr.teambrother.web.vidanges.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -16,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-public class HomeController {
+public class AccueilController {
 
 	/**
 	 * Méthode qui traite l'url "/"
@@ -25,9 +24,8 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping("/")
-	public ModelAndView getHome(@RequestParam(value = "nom", defaultValue = "World") String name) {
+	public ModelAndView getAccueil(String name) {
 		ModelAndView mav = new ModelAndView("home");
-		mav.addObject("nom", name);
 		return mav;
 	}
 

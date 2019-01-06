@@ -3,9 +3,14 @@
  */
 package fr.teambrother.web.vidanges.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import fr.teambrother.web.vidanges.bean.Voiture;
+import fr.teambrother.web.vidanges.dao.DAOFactory;
 
 /**
  * Classe contrôleur qu gère mes url de base
@@ -15,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
  *
  */
 @Controller
-public class CarsController {
+public class VoituresController {
 
 	/**
 	 * Méthode qui traite l'url "/voitures"
@@ -23,10 +28,11 @@ public class CarsController {
 	 * @return
 	 */
 	@RequestMapping("/voiture/list")
-	public ModelAndView getCars() {
+	public ModelAndView getVoitures() {
 		ModelAndView mav = new ModelAndView("voiture/list");
-		String[] cars = { "Citroen", "Renault", "Peugeot" };
-		mav.addObject("voitures", cars);
+		DAOFactory daoFactory = DAOFactory.getInstance();
+		List<Voiture> voitures = daoFactory.getVoitureDAO().lister();
+		mav.addObject("voitures", voitures);
 		return mav;
 	}
 

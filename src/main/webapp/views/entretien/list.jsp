@@ -14,18 +14,14 @@
 		<table>
 			<tr>
 				<th>ID</th>
-				<th>Propriétaire</th>
-				<th>Marque</th>
-				<th>Modèle</th>
-				<th>Couleur</th>
+				<th>Date</th>
+				<th>ID Voiture</th>
 			</tr>
-			<c:forEach items="${voitures}" var="voiture">
+			<c:forEach items="${entretiens}" var="entretien">
 				<tr>
-				<td>${voiture.id}</td>
-				<td>${voiture.proprietaire}</td>
-				<td>${voiture.marque}</td>
-				<td>${voiture.modele}</td>
-				<td>${voiture.couleur}</td>
+				<td>${entretien.id}</td>
+				<td>${entretien.date}</td>
+				<td>${entretien.idVoiture}</td>
 				</tr>
 			</c:forEach>
 		</table>
