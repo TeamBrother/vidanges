@@ -10,11 +10,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import fr.teambrother.web.vidanges.bean.Entretien;
 import fr.teambrother.web.vidanges.dao.DAOException;
 import fr.teambrother.web.vidanges.dao.DAOFactory;
 import fr.teambrother.web.vidanges.dao.EntretienDAO;
 
+@Repository("entretienDAO")
 public class EntretienDAOImpl implements EntretienDAO {
 
 	private static final String TABLE_NAME = "entretien";
@@ -31,10 +35,10 @@ public class EntretienDAOImpl implements EntretienDAO {
 
 	private static final String SQL_LIST = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME + " ORDER BY date";
 
+	@Autowired
 	private DAOFactory daoFactory;
 
-	public EntretienDAOImpl(DAOFactory daoFactory) {
-		this.daoFactory = daoFactory;
+	public EntretienDAOImpl() {
 	}
 
 	public void creer(Entretien entretien) throws DAOException {

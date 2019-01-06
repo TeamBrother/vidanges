@@ -2,15 +2,11 @@
 <html lang="fr">
 	<head>
 		<%@page isELIgnored="false" %>
-		<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
-		<title>Vidanges Manager</title>
+		<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+		<jsp:include page="/views/include/head.jsp" />
 	</head>
 	<body>
-		<ul>
-			<li><a href="<%=request.getContextPath()%>">Accueil</</a></li>
-			<li><a href="<%=request.getContextPath()%>/voiture/list">Voitures</</a></li>
-			<li><a href="<%=request.getContextPath()%>/entretien/list">Entretiens</</a></li>
-		</ul>
+		<jsp:include page="/views/include/header.jsp" />
 		<table>
 			<tr>
 				<th>ID</th>
@@ -25,5 +21,6 @@
 				</tr>
 			</c:forEach>
 		</table>
+		<jsp:include page="/views/include/footer.jsp" />
 	</body>
 </html>
