@@ -17,11 +17,11 @@
 			</tr>
 			<c:forEach items="${voitures}" var="voiture">
 				<tr>
-				<td><a href="<%=request.getContextPath()%>/voiture/detail?id=${voiture.id}">${voiture.id}</a></td>
-				<td>${voiture.proprietaire}</td>
-				<td>${voiture.marque}</td>
-				<td>${voiture.modele}</td>
-				<td>${voiture.couleur}</td>
+					<td><a href="<%=request.getContextPath()%>/voiture/detail?id=${voiture.id}">${voiture.id}</a></td>
+					<td>${voiture.proprietaire}</td>
+					<td>${voiture.marque}</td>
+					<td>${voiture.modele}</td>
+					<td>${voiture.couleur}</td>
 				</tr>
 			</c:forEach>
 		</table>

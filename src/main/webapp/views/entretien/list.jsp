@@ -15,9 +15,9 @@
 			</tr>
 			<c:forEach items="${entretiens}" var="entretien">
 				<tr>
-				<td>${entretien.id}</td>
-				<td>${entretien.date}</td>
-				<td>${entretien.idVoiture}</td>
+					<td>${entretien.id}</td>
+					<td>${entretien.date}</td>
+					<td>${entretien.idVoiture}</td>
 				</tr>
 			</c:forEach>
 		</table>
