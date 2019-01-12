@@ -13,14 +13,13 @@
 				<th>Nom</th>
 				<th>Prénom</th>
 				<th>Adresse</th>
-							</tr>
-			<c:forEach items="${voitures}" var="voiture">
+			</tr>
+			<c:forEach items="${proprietaires}" var="proprietaire">
 				<tr>
-				<td><a href="<%=request.getContextPath()%>/proprietaire/detail?id=${proprietaire.id}">${proprietaire.id}</a></td>
-				<td>${proprietaire.id}</td>
-				<td>${proprietaire.nom}</td>
-				<td>${proprietaire.prénom}</td>
-				<td>${proprietaire.adresse}</td>
+					<td><a href="<%=request.getContextPath()%>/proprietaire/detail?id=${proprietaire.id}">${proprietaire.id}</a></td>
+					<td>${proprietaire.nom}</td>
+					<td>${proprietaire.prenom}</td>
+					<td>${proprietaire.adresse}</td>
 				</tr>
 			</c:forEach>
 		</table>

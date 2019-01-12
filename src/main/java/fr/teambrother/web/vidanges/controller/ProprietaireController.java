@@ -28,7 +28,7 @@ public class ProprietaireController {
 	@Autowired
 	private ProprietaireDAO proprietaireDAO;
 
-	@RequestMapping("/ProprietaireController/list")
+	@RequestMapping("/proprietaire/list")
 	public ModelAndView getProprietaires() {
 		ModelAndView mav = new ModelAndView("proprietaire/list");
 		List<Proprietaire> proprietaires = proprietaireDAO.lister();
@@ -36,7 +36,7 @@ public class ProprietaireController {
 		return mav;
 	}
 
-	@RequestMapping("/voiture/detail")
+	@RequestMapping("/proprietaire/detail")
 	public ModelAndView getVoiture(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView("proprietaire/detail");
 		Proprietaire proprietaire = proprietaireDAO.trouver(id);

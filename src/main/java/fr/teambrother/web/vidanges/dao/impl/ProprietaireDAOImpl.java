@@ -31,23 +31,18 @@ import fr.teambrother.web.vidanges.dao.ProprietaireDAO;
 @Repository("proprietaireDAO")
 public class ProprietaireDAOImpl implements ProprietaireDAO {
 
-	private static final String TABLE_NAME = "propriétaire";
+	private static final String TABLE_NAME = "proprietaire";
 
-	private static final String TABLE_COLUMNS = "nom, prénom, numéro, complément adresse, code postal, ville, pays";
+	private static final String TABLE_COLUMNS = "nom, prenom, adresse";
 
-	@SuppressWarnings("unused")
-	private static final String SQL_CREATE = "INSERT INTO " + TABLE_NAME + " (" + TABLE_COLUMNS
-			+ ") VALUES (?, ?, ?, ?, ?, ?, ?)";
+	private static final String SQL_CREATE = "INSERT INTO " + TABLE_NAME + " (" + TABLE_COLUMNS + ") VALUES (?, ?, ?)";
 
-	@SuppressWarnings("unused")
 	private static final String SQL_READ = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME + " WHERE id = ?";
 
-	@SuppressWarnings("unused")
 	private static final String SQL_DELETE = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
-	@SuppressWarnings("unused")
 	private static final String SQL_LIST = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME
-			+ " ORDER BY proprietaire";
+			+ " ORDER BY nom, prenom";
 
 	@Autowired
 	private DAOFactory daoFactory;
@@ -64,8 +59,7 @@ public class ProprietaireDAOImpl implements ProprietaireDAO {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee(connexion, SQL_CREATE, true, proprietaire.getNom(),
-					proprietaire.getPrenom(), proprietaire.getAdresse(), proprietaire.getCodePostal(),
-					proprietaire.getVille(), proprietaire.getPays());
+					proprietaire.getPrenom(), proprietaire.getAdresse());
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if (statut == 0) {
@@ -160,9 +154,9 @@ public class ProprietaireDAOImpl implements ProprietaireDAO {
 	private static Proprietaire map(ResultSet resultSet) throws SQLException {
 		Proprietaire proprietaire = new Proprietaire();
 		proprietaire.setId(resultSet.getLong("id"));
-		proprietaire.setNom(resultSet.getString("Nom"));
-		proprietaire.setPrenom(resultSet.getString("Prénom"));
-		proprietaire.setAdresse(resultSet.getString("Adresse"));
+		proprietaire.setNom(resultSet.getString("nom"));
+		proprietaire.setPrenom(resultSet.getString("prenom"));
+		proprietaire.setAdresse(resultSet.getString("adresse"));
 		return proprietaire;
 	}
 

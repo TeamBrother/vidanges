@@ -17,6 +17,7 @@ import fr.teambrother.web.vidanges.bean.Entretien;
 import fr.teambrother.web.vidanges.dao.DAOException;
 import fr.teambrother.web.vidanges.dao.DAOFactory;
 import fr.teambrother.web.vidanges.dao.EntretienDAO;
+import fr.teambrother.web.vidanges.dao.VoitureDAO;
 
 @Repository("entretienDAO")
 public class EntretienDAOImpl implements EntretienDAO {
@@ -38,6 +39,9 @@ public class EntretienDAOImpl implements EntretienDAO {
 	@Autowired
 	private DAOFactory daoFactory;
 
+	@Autowired
+	private VoitureDAO voitureDAO;
+
 	public EntretienDAOImpl() {
 	}
 
@@ -50,7 +54,7 @@ public class EntretienDAOImpl implements EntretienDAO {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee(connexion, SQL_CREATE, true, entretien.getDate(),
-					entretien.getIdVoiture());
+					entretien.getVoiture().getId());
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if (statut == 0) {
@@ -142,11 +146,11 @@ public class EntretienDAOImpl implements EntretienDAO {
 	 * entre une ligne issue de la table des entretiens (un ResultSet) et un bean
 	 * {@link Entretien}.
 	 */
-	private static Entretien map(ResultSet resultSet) throws SQLException {
+	private Entretien map(ResultSet resultSet) throws SQLException {
 		Entretien entretien = new Entretien();
 		entretien.setId(resultSet.getLong("id"));
 		entretien.setDate(resultSet.getDate("date"));
-		entretien.setIdVoiture(resultSet.getLong("idvoiture"));
+		entretien.setVoiture(voitureDAO.trouver(resultSet.getLong("idvoiture")));
 		return entretien;
 	}
 

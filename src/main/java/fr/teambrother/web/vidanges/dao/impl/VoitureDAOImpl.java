@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import fr.teambrother.web.vidanges.bean.Voiture;
 import fr.teambrother.web.vidanges.dao.DAOException;
 import fr.teambrother.web.vidanges.dao.DAOFactory;
+import fr.teambrother.web.vidanges.dao.ProprietaireDAO;
 import fr.teambrother.web.vidanges.dao.VoitureDAO;
 
 @Repository("voitureDAO")
@@ -23,7 +24,7 @@ public class VoitureDAOImpl implements VoitureDAO {
 
 	private static final String TABLE_NAME = "voiture";
 
-	private static final String TABLE_COLUMNS = "couleur, marque, modele, proprietaire";
+	private static final String TABLE_COLUMNS = "couleur, marque, modele, idproprietaire";
 
 	private static final String SQL_CREATE = "INSERT INTO " + TABLE_NAME + " (" + TABLE_COLUMNS
 			+ ") VALUES (?, ?, ?, ?)";
@@ -34,11 +35,13 @@ public class VoitureDAOImpl implements VoitureDAO {
 
 	private static final String SQL_DELETE = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
-	private static final String SQL_LIST = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME
-			+ " ORDER BY proprietaire";
+	private static final String SQL_LIST = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME + " ORDER BY marque";
 
 	@Autowired
 	private DAOFactory daoFactory;
+
+	@Autowired
+	private ProprietaireDAO proprietaireDAO;
 
 	public VoitureDAOImpl() {
 	}
@@ -52,7 +55,7 @@ public class VoitureDAOImpl implements VoitureDAO {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee(connexion, SQL_CREATE, true, voiture.getCouleur(),
-					voiture.getMarque(), voiture.getModele(), voiture.getProprietaire());
+					voiture.getMarque(), voiture.getModele(), voiture.getProprietaire().getId());
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if (statut == 0) {
@@ -144,13 +147,13 @@ public class VoitureDAOImpl implements VoitureDAO {
 	 * entre une ligne issue de la table des voitures (un ResultSet) et un bean
 	 * {@link Voiture}.
 	 */
-	private static Voiture map(ResultSet resultSet) throws SQLException {
+	private Voiture map(ResultSet resultSet) throws SQLException {
 		Voiture voiture = new Voiture();
 		voiture.setId(resultSet.getLong("id"));
 		voiture.setCouleur(resultSet.getString("couleur"));
 		voiture.setMarque(resultSet.getString("marque"));
 		voiture.setModele(resultSet.getString("modele"));
-		voiture.setProprietaire(resultSet.getString("proprietaire"));
+		voiture.setProprietaire(proprietaireDAO.trouver(resultSet.getLong("idproprietaire")));
 		return voiture;
 	}
 

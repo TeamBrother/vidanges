@@ -15,9 +15,9 @@
 			</tr>
 			<c:forEach items="${entretiens}" var="entretien">
 				<tr>
-				<td>${entretien.id}</td>
-				<td>${entretien.date}</td>
-				<td>${entretien.idVoiture}</td>
+					<td><a href="<%=request.getContextPath()%>/entretien/detail?id=${entretien.id}">${entretien.id}</a></td>
+					<td>${entretien.date}</td>
+					<td><a href="<%=request.getContextPath()%>/voiture/detail?id=${entretien.voiture.id}">${entretien.voiture.marque} - ${entretien.voiture.modele}</a></td>
 				</tr>
 			</c:forEach>
 		</table>

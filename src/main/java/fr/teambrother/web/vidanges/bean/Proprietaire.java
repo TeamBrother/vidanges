@@ -15,34 +15,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Proprietaire {
+
 	private Long id;
 	private String nom;
 	private String prenom;
-	private String numero;
 	private String adresse;
-
-	/**
-	 * @return
-	 */
-	public Object getCodePostal() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * @return
-	 */
-	public Object getPays() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/**
-	 * @return
-	 */
-	public Object getVille() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
