@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import fr.teambrother.web.vidanges.bean.Entretien;
+import fr.teambrother.web.vidanges.bean.Voiture;
 import fr.teambrother.web.vidanges.dao.DAOException;
 import fr.teambrother.web.vidanges.dao.DAOFactory;
 import fr.teambrother.web.vidanges.dao.EntretienDAO;
@@ -35,6 +36,9 @@ public class EntretienDAOImpl implements EntretienDAO {
 	private static final String SQL_DELETE = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
 	private static final String SQL_LIST = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME + " ORDER BY date";
+
+	private static final String SQL_LIST_PAR_VOITURE = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME
+			+ " WHERE idvoiture = ? ORDER BY date";
 
 	@Autowired
 	private DAOFactory daoFactory;
@@ -127,6 +131,37 @@ public class EntretienDAOImpl implements EntretienDAO {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee(connexion, SQL_LIST, false);
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			while (resultSet.next()) {
+				Entretien entretien = map(resultSet);
+				list.add(entretien);
+			}
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		} finally {
+			fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+		}
+		return list;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.teambrother.web.vidanges.dao.EntretienDAO#listerParVoiture(fr.teambrother.
+	 * web.vidanges.bean.Voiture)
+	 */
+	@Override
+	public List<Entretien> listerParVoiture(Voiture voiture) {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		List<Entretien> list = new ArrayList<Entretien>();
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee(connexion, SQL_LIST_PAR_VOITURE, false, voiture.getId());
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			while (resultSet.next()) {

@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.teambrother.web.vidanges.bean.Proprietaire;
+import fr.teambrother.web.vidanges.bean.Voiture;
 import fr.teambrother.web.vidanges.dao.ProprietaireDAO;
+import fr.teambrother.web.vidanges.dao.VoitureDAO;
 
 /**
  * Classe contrôleur qu gère les url de base
@@ -28,6 +30,9 @@ public class ProprietaireController {
 	@Autowired
 	private ProprietaireDAO proprietaireDAO;
 
+	@Autowired
+	private VoitureDAO voitureDAO;
+
 	@RequestMapping("/proprietaire/list")
 	public ModelAndView getProprietaires() {
 		ModelAndView mav = new ModelAndView("proprietaire/list");
@@ -37,10 +42,12 @@ public class ProprietaireController {
 	}
 
 	@RequestMapping("/proprietaire/detail")
-	public ModelAndView getVoiture(@RequestParam("id") Long id) {
+	public ModelAndView getProprietaire(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView("proprietaire/detail");
 		Proprietaire proprietaire = proprietaireDAO.trouver(id);
+		List<Voiture> voitures = voitureDAO.listerParProprietaire(proprietaire);
 		mav.addObject("proprietaire", proprietaire);
+		mav.addObject("voitures", voitures);
 		return mav;
 	}
 

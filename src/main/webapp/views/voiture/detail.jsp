@@ -14,6 +14,18 @@
 			<span>Modèle : ${voiture.modele}</span><br />
 			<span>Couleur : ${voiture.couleur}</span><br />
 		</article>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Date</th>
+			</tr>
+			<c:forEach items="${entretiens}" var="entretien">
+				<tr>
+					<td><a href="<%=request.getContextPath()%>/entretien/detail?id=${entretien.id}">${entretien.id}</a></td>
+					<td>${entretien.date}</td>
+				</tr>
+			</c:forEach>
+		</table>
 		<jsp:include page="/views/include/footer.jsp" />
 	</body>
 </html>

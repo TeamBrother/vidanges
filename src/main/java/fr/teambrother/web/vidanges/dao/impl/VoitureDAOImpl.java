@@ -13,6 +13,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import fr.teambrother.web.vidanges.bean.Proprietaire;
 import fr.teambrother.web.vidanges.bean.Voiture;
 import fr.teambrother.web.vidanges.dao.DAOException;
 import fr.teambrother.web.vidanges.dao.DAOFactory;
@@ -36,6 +37,9 @@ public class VoitureDAOImpl implements VoitureDAO {
 	private static final String SQL_DELETE = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
 	private static final String SQL_LIST = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME + " ORDER BY marque";
+
+	private static final String SQL_LIST_PAR_PROPRIETAIRE = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME
+			+ " WHERE idproprietaire = ? ORDER BY marque";
 
 	@Autowired
 	private DAOFactory daoFactory;
@@ -128,6 +132,38 @@ public class VoitureDAOImpl implements VoitureDAO {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee(connexion, SQL_LIST, false);
+			resultSet = preparedStatement.executeQuery();
+			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
+			while (resultSet.next()) {
+				Voiture voiture = map(resultSet);
+				list.add(voiture);
+			}
+		} catch (SQLException e) {
+			throw new DAOException(e);
+		} finally {
+			fermeturesSilencieuses(resultSet, preparedStatement, connexion);
+		}
+		return list;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * fr.teambrother.web.vidanges.dao.VoitureDAO#listerParProprietaire(java.lang.
+	 * Long)
+	 */
+	@Override
+	public List<Voiture> listerParProprietaire(Proprietaire proprietaire) {
+		Connection connexion = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		List<Voiture> list = new ArrayList<Voiture>();
+		try {
+			/* Récupération d'une connexion depuis la Factory */
+			connexion = daoFactory.getConnection();
+			preparedStatement = initialisationRequetePreparee(connexion, SQL_LIST_PAR_PROPRIETAIRE, false,
+					proprietaire.getId());
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			while (resultSet.next()) {
