@@ -21,7 +21,7 @@ import fr.teambrother.web.vidanges.dao.EntretienDAO;
 import fr.teambrother.web.vidanges.dao.VoitureDAO;
 
 @Repository("entretienDAO")
-public class EntretienDAOImpl implements EntretienDAO {
+public abstract class EntretienDAOImpl implements EntretienDAO {
 
 	private static final String TABLE_NAME = "entretien";
 
