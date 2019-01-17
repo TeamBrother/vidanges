@@ -11,11 +11,11 @@ CREATE TABLE `vidange`.`entretien` (
   `idvoiture` INT(11) NULL,
   PRIMARY KEY (`id`));
 
-CREATE TABLE `vidange`.`proprietaire` (
+CREATE TABLE `vidange`.`voiture` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `couleur` VARCHAR(10) NULL,
   `marque` VARCHAR(45) NULL,
   `modele` VARCHAR(45) NULL,
-  `proprietaire` VARCHAR(45) NULL,
+  `idproprietaire` INT(11) NULL,
   PRIMARY KEY (`id`));
   
