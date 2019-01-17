@@ -7,10 +7,15 @@
 	</head>
 	<body>
 		<jsp:include page="/views/include/header.jsp" />
+		<article>
+			<span>ID: ${proprietaire.id}</span><br />
+			<span>Nom : ${proprietaire.nom}</span><br />
+			<span>Prénom : ${proprietaire.prenom}</span><br />
+			<span>Adresse : ${proprietaire.adresse}</span><br />
+		</article>
 		<table>
 			<tr>
 				<th>ID</th>
-				<th>Propriétaire</th>
 				<th>Marque</th>
 				<th>Modèle</th>
 				<th>Couleur</th>
@@ -18,7 +23,6 @@
 			<c:forEach items="${voitures}" var="voiture">
 				<tr>
 				<td><a href="<%=request.getContextPath()%>/voiture/detail?id=${voiture.id}">${voiture.id}</a></td>
-				<td><a href="<%=request.getContextPath()%>/proprietaire/detail?id=${voiture.proprietaire.id}">${voiture.proprietaire.nom} ${voiture.proprietaire.prenom}</a></td>
 				<td>${voiture.marque}</td>
 				<td>${voiture.modele}</td>
 				<td>${voiture.couleur}</td>

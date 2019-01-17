@@ -11,6 +11,6 @@ public class Entretien {
 
 	private Long id;
 	private Date date;
-	private Long idVoiture;
+	private Voiture voiture;
 
 }

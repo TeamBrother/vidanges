@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package fr.teambrother.web.vidanges.dao.impl;
 
 import static fr.teambrother.web.vidanges.dao.DAOUtilitaire.fermeturesSilencieuses;
@@ -14,43 +17,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import fr.teambrother.web.vidanges.bean.Proprietaire;
-import fr.teambrother.web.vidanges.bean.Voiture;
 import fr.teambrother.web.vidanges.dao.DAOException;
 import fr.teambrother.web.vidanges.dao.DAOFactory;
 import fr.teambrother.web.vidanges.dao.ProprietaireDAO;
-import fr.teambrother.web.vidanges.dao.VoitureDAO;
 
-@Repository("voitureDAO")
-public class VoitureDAOImpl implements VoitureDAO {
+/**
+ * TODO description
+ *
+ * @author s6raphin
+ * @version 1.0
+ */
 
-	private static final String TABLE_NAME = "voiture";
+@Repository("proprietaireDAO")
+public class ProprietaireDAOImpl implements ProprietaireDAO {
 
-	private static final String TABLE_COLUMNS = "couleur, marque, modele, idproprietaire";
+	private static final String TABLE_NAME = "proprietaire";
 
-	private static final String SQL_CREATE = "INSERT INTO " + TABLE_NAME + " (" + TABLE_COLUMNS
-			+ ") VALUES (?, ?, ?, ?)";
+	private static final String TABLE_COLUMNS = "nom, prenom, adresse";
+
+	private static final String SQL_CREATE = "INSERT INTO " + TABLE_NAME + " (" + TABLE_COLUMNS + ") VALUES (?, ?, ?)";
 
 	private static final String SQL_READ = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME + " WHERE id = ?";
 
-//	private static final String SQL_UPDATE = "UPDATE " + TABLE_COLUMNS + " SET ? = ? WHERE id = ?";
-
 	private static final String SQL_DELETE = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
 
-	private static final String SQL_LIST = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME + " ORDER BY marque";
-
-	private static final String SQL_LIST_PAR_PROPRIETAIRE = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME
-			+ " WHERE idproprietaire = ? ORDER BY marque";
+	private static final String SQL_LIST = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME
+			+ " ORDER BY nom, prenom";
 
 	@Autowired
 	private DAOFactory daoFactory;
 
-	@Autowired
-	private ProprietaireDAO proprietaireDAO;
-
-	public VoitureDAOImpl() {
+	public ProprietaireDAOImpl() {
 	}
 
-	public void creer(Voiture voiture) throws DAOException {
+	public void creer(Proprietaire proprietaire) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet valeursAutoGenerees = null;
@@ -58,8 +58,8 @@ public class VoitureDAOImpl implements VoitureDAO {
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee(connexion, SQL_CREATE, true, voiture.getCouleur(),
-					voiture.getMarque(), voiture.getModele(), voiture.getProprietaire().getId());
+			preparedStatement = initialisationRequetePreparee(connexion, SQL_CREATE, true, proprietaire.getNom(),
+					proprietaire.getPrenom(), proprietaire.getAdresse());
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if (statut == 0) {
@@ -69,7 +69,7 @@ public class VoitureDAOImpl implements VoitureDAO {
 			valeursAutoGenerees = preparedStatement.getGeneratedKeys();
 			if (valeursAutoGenerees.next()) {
 				/* Puis initialisation de la propriété id du bean Utilisateur avec sa valeur */
-				voiture.setId(valeursAutoGenerees.getLong(1));
+				proprietaire.setId(valeursAutoGenerees.getLong(1));
 			} else {
 				throw new DAOException("Échec de la création de la voiture en base, aucun ID auto-généré retourné.");
 			}
@@ -81,11 +81,11 @@ public class VoitureDAOImpl implements VoitureDAO {
 	}
 
 	/* Implémentation de la méthode définie dans l'interface UtilisateurDao */
-	public Voiture trouver(Long id) throws DAOException {
+	public Proprietaire trouver(Long id) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		Voiture voiture = null;
+		Proprietaire proprietaire = null;
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
@@ -93,28 +93,28 @@ public class VoitureDAOImpl implements VoitureDAO {
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			if (resultSet.next()) {
-				voiture = map(resultSet);
+				proprietaire = map(resultSet);
 			}
 		} catch (SQLException e) {
 			throw new DAOException(e);
 		} finally {
 			fermeturesSilencieuses(resultSet, preparedStatement, connexion);
 		}
-		return voiture;
+		return proprietaire;
 	}
 
-	public void modifier(Voiture voiture) throws DAOException {
+	public void modifier(Proprietaire proprietaire) throws DAOException {
 		// TODO Auto-generated method stub
 	}
 
-	public void supprimer(Voiture voiture) throws DAOException {
+	public void supprimer(Proprietaire proprietaire) throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee(connexion, SQL_DELETE, false, voiture.getId());
+			preparedStatement = initialisationRequetePreparee(connexion, SQL_DELETE, false, proprietaire.getId());
 			resultSet = preparedStatement.executeQuery();
 		} catch (SQLException e) {
 			throw new DAOException(e);
@@ -123,11 +123,11 @@ public class VoitureDAOImpl implements VoitureDAO {
 		}
 	}
 
-	public List<Voiture> lister() throws DAOException {
+	public List<Proprietaire> lister() throws DAOException {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		List<Voiture> list = new ArrayList<Voiture>();
+		List<Proprietaire> list = new ArrayList<Proprietaire>();
 		try {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
@@ -135,40 +135,8 @@ public class VoitureDAOImpl implements VoitureDAO {
 			resultSet = preparedStatement.executeQuery();
 			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
 			while (resultSet.next()) {
-				Voiture voiture = map(resultSet);
-				list.add(voiture);
-			}
-		} catch (SQLException e) {
-			throw new DAOException(e);
-		} finally {
-			fermeturesSilencieuses(resultSet, preparedStatement, connexion);
-		}
-		return list;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * fr.teambrother.web.vidanges.dao.VoitureDAO#listerParProprietaire(java.lang.
-	 * Long)
-	 */
-	@Override
-	public List<Voiture> listerParProprietaire(Proprietaire proprietaire) {
-		Connection connexion = null;
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
-		List<Voiture> list = new ArrayList<Voiture>();
-		try {
-			/* Récupération d'une connexion depuis la Factory */
-			connexion = daoFactory.getConnection();
-			preparedStatement = initialisationRequetePreparee(connexion, SQL_LIST_PAR_PROPRIETAIRE, false,
-					proprietaire.getId());
-			resultSet = preparedStatement.executeQuery();
-			/* Parcours de la ligne de données de l'éventuel ResulSet retourné */
-			while (resultSet.next()) {
-				Voiture voiture = map(resultSet);
-				list.add(voiture);
+				Proprietaire proprietaire = map(resultSet);
+				list.add(proprietaire);
 			}
 		} catch (SQLException e) {
 			throw new DAOException(e);
@@ -180,17 +148,16 @@ public class VoitureDAOImpl implements VoitureDAO {
 
 	/**
 	 * Simple méthode utilitaire permettant de faire la correspondance (le mapping)
-	 * entre une ligne issue de la table des voitures (un ResultSet) et un bean
-	 * {@link Voiture}.
+	 * entre une ligne issue de la table des proprietaire (un ResultSet) et un bean
+	 * {@link Proprietaire}.
 	 */
-	private Voiture map(ResultSet resultSet) throws SQLException {
-		Voiture voiture = new Voiture();
-		voiture.setId(resultSet.getLong("id"));
-		voiture.setCouleur(resultSet.getString("couleur"));
-		voiture.setMarque(resultSet.getString("marque"));
-		voiture.setModele(resultSet.getString("modele"));
-		voiture.setProprietaire(proprietaireDAO.trouver(resultSet.getLong("idproprietaire")));
-		return voiture;
+	private static Proprietaire map(ResultSet resultSet) throws SQLException {
+		Proprietaire proprietaire = new Proprietaire();
+		proprietaire.setId(resultSet.getLong("id"));
+		proprietaire.setNom(resultSet.getString("nom"));
+		proprietaire.setPrenom(resultSet.getString("prenom"));
+		proprietaire.setAdresse(resultSet.getString("adresse"));
+		return proprietaire;
 	}
 
 }

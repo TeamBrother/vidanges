@@ -9,11 +9,23 @@
 		<jsp:include page="/views/include/header.jsp" />
 		<article>
 			<span>ID: ${voiture.id}</span><br />
-			<span>Propriétaire: ${voiture.proprietaire}</span><br />
+			<span>Propriétaire: <a href="<%=request.getContextPath()%>/proprietaire/detail?id=${voiture.proprietaire.id}">${voiture.proprietaire.nom} ${voiture.proprietaire.prenom}</a></span><br />
 			<span>Marque : ${voiture.marque}</span><br />
 			<span>Modèle : ${voiture.modele}</span><br />
 			<span>Couleur : ${voiture.couleur}</span><br />
 		</article>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Date</th>
+			</tr>
+			<c:forEach items="${entretiens}" var="entretien">
+				<tr>
+					<td><a href="<%=request.getContextPath()%>/entretien/detail?id=${entretien.id}">${entretien.id}</a></td>
+					<td>${entretien.date}</td>
+				</tr>
+			</c:forEach>
+		</table>
 		<jsp:include page="/views/include/footer.jsp" />
 	</body>
 </html>

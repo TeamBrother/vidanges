@@ -11,6 +11,6 @@ public class Voiture {
 	private String couleur;
 	private String marque;
 	private String modele;
-	private String proprietaire;
+	private Proprietaire proprietaire;
 
 }

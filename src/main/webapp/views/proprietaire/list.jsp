@@ -10,14 +10,16 @@
 		<table>
 			<tr>
 				<th>ID</th>
-				<th>Date</th>
-				<th>ID Voiture</th>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>Adresse</th>
 			</tr>
-			<c:forEach items="${entretiens}" var="entretien">
+			<c:forEach items="${proprietaires}" var="proprietaire">
 				<tr>
-					<td><a href="<%=request.getContextPath()%>/entretien/detail?id=${entretien.id}">${entretien.id}</a></td>
-					<td>${entretien.date}</td>
-					<td><a href="<%=request.getContextPath()%>/voiture/detail?id=${entretien.voiture.id}">${entretien.voiture.marque} - ${entretien.voiture.modele}</a></td>
+					<td><a href="<%=request.getContextPath()%>/proprietaire/detail?id=${proprietaire.id}">${proprietaire.id}</a></td>
+					<td>${proprietaire.nom}</td>
+					<td>${proprietaire.prenom}</td>
+					<td>${proprietaire.adresse}</td>
 				</tr>
 			</c:forEach>
 		</table>
