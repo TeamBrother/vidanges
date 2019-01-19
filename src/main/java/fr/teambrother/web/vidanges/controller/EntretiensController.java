@@ -41,12 +41,10 @@ public class EntretiensController {
 	}
 
 	@RequestMapping("/entretien/detail")
-	public ModelAndView getVoiture(@RequestParam("id") Long id) {
+	public ModelAndView getEntretien(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView("entretien/detail");
 		Entretien entretien = entretienDAO.trouver(id);
-		List<Entretien> entretiens = entretienDAO.listerParVoiture(entretien);
-		mav.addObject("voiture", entretien);
-		mav.addObject("entretiens", entretiens);
+		mav.addObject("entretien", entretien);
 		return mav;
 	}
 }

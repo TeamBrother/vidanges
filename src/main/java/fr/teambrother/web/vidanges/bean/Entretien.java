@@ -12,5 +12,6 @@ public class Entretien {
 	private Long id;
 	private Date date;
 	private Voiture voiture;
+	private String commentaire;
 
 }

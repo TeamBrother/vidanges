@@ -21,11 +21,11 @@ import fr.teambrother.web.vidanges.dao.EntretienDAO;
 import fr.teambrother.web.vidanges.dao.VoitureDAO;
 
 @Repository("entretienDAO")
-public abstract class EntretienDAOImpl implements EntretienDAO {
+public class EntretienDAOImpl implements EntretienDAO {
 
 	private static final String TABLE_NAME = "entretien";
 
-	private static final String TABLE_COLUMNS = "date, idvoiture";
+	private static final String TABLE_COLUMNS = "date, idvoiture, commentaire";
 
 	private static final String SQL_CREATE = "INSERT INTO " + TABLE_NAME + " (" + TABLE_COLUMNS + ") VALUES (?, ?)";
 
@@ -58,7 +58,7 @@ public abstract class EntretienDAOImpl implements EntretienDAO {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee(connexion, SQL_CREATE, true, entretien.getDate(),
-					entretien.getVoiture().getId());
+					entretien.getVoiture().getId(), entretien.getCommentaire());
 			int statut = preparedStatement.executeUpdate();
 			/* Analyse du statut retourné par la requête d'insertion */
 			if (statut == 0) {
@@ -186,6 +186,7 @@ public abstract class EntretienDAOImpl implements EntretienDAO {
 		entretien.setId(resultSet.getLong("id"));
 		entretien.setDate(resultSet.getDate("date"));
 		entretien.setVoiture(voitureDAO.trouver(resultSet.getLong("idvoiture")));
+		entretien.setCommentaire(resultSet.getString("commentaire"));
 		return entretien;
 	}
 

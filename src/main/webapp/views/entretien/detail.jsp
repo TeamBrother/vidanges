@@ -8,21 +8,11 @@
 	<body>
 		<jsp:include page="/views/include/header.jsp" />
 		<article>
-			<span>ID: ${voiture.id}</span><br />
-			<span>Entretien: <a href="<%=request.getContextPath()%>/entretien/detail?id=${voiture.date.id}"></a></span><br />
-			</article>
-		<table>
-			<tr>
-				<th>ID</th>
-				<th>Date</th>
-			</tr>
-			<c:forEach items="${entretiens}" var="entretien">
-				<tr>
-					<td><a href="<%=request.getContextPath()%>/entretien/detail?id=${entretien.id}">${entretien.id}</a></td>
-					<td>${entretien.date}</td>
-				</tr>
-			</c:forEach>
-		</table>
+			<span>ID: ${entretien.id}</span><br />
+			<span>Date: ${entretien.date}</span><br />
+			<span>Voiture: <a href="<%=request.getContextPath()%>/voiture/detail?id=${entretien.voiture.id}">${entretien.voiture.marque} ${entretien.voiture.modele}</a> <a href="<%=request.getContextPath()%>/proprietaire/detail?id=${entretien.voiture.proprietaire.id}">(${entretien.voiture.proprietaire.nom} ${entretien.voiture.proprietaire.prenom})</a></span><br />
+			<span>Commentaire: ${entretien.commentaire}</span><br />
+		</article>
 		<jsp:include page="/views/include/footer.jsp" />
 	</body>
 </html>
