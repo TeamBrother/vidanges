@@ -7,6 +7,7 @@
 	</head>
 	<body>
 		<jsp:include page="/views/include/header.jsp" />
+		<a href="<%=request.getContextPath()%>/entretien/ajout">Ajouter un entretien</a>
 		<table>
 			<tr>
 				<th>Date</th>

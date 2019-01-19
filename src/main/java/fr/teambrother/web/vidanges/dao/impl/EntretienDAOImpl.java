@@ -27,7 +27,7 @@ public class EntretienDAOImpl implements EntretienDAO {
 
 	private static final String TABLE_COLUMNS = "date, idvoiture, commentaire";
 
-	private static final String SQL_CREATE = "INSERT INTO " + TABLE_NAME + " (" + TABLE_COLUMNS + ") VALUES (?, ?)";
+	private static final String SQL_CREATE = "INSERT INTO " + TABLE_NAME + " (" + TABLE_COLUMNS + ") VALUES (?, ?, ?)";
 
 	private static final String SQL_READ = "SELECT id, " + TABLE_COLUMNS + " FROM " + TABLE_NAME + " WHERE id = ?";
 
@@ -114,7 +114,7 @@ public class EntretienDAOImpl implements EntretienDAO {
 			/* Récupération d'une connexion depuis la Factory */
 			connexion = daoFactory.getConnection();
 			preparedStatement = initialisationRequetePreparee(connexion, SQL_DELETE, false, entretien.getId());
-			resultSet = preparedStatement.executeQuery();
+			preparedStatement.execute();
 		} catch (SQLException e) {
 			throw new DAOException(e);
 		} finally {
@@ -152,7 +152,6 @@ public class EntretienDAOImpl implements EntretienDAO {
 	 * fr.teambrother.web.vidanges.dao.EntretienDAO#listerParVoiture(fr.teambrother.
 	 * web.vidanges.bean.Voiture)
 	 */
-	@Override
 	public List<Entretien> listerParVoiture(Voiture voiture) {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;

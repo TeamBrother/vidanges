@@ -153,7 +153,6 @@ public class VoitureDAOImpl implements VoitureDAO {
 	 * fr.teambrother.web.vidanges.dao.VoitureDAO#listerParProprietaire(java.lang.
 	 * Long)
 	 */
-	@Override
 	public List<Voiture> listerParProprietaire(Proprietaire proprietaire) {
 		Connection connexion = null;
 		PreparedStatement preparedStatement = null;
