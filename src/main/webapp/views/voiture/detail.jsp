@@ -16,13 +16,13 @@
 		</article>
 		<table>
 			<tr>
-				<th>ID</th>
 				<th>Date</th>
+				<th>Commentaire</th>
 			</tr>
 			<c:forEach items="${entretiens}" var="entretien">
 				<tr>
-					<td><a href="<%=request.getContextPath()%>/entretien/detail?id=${entretien.id}">${entretien.id}</a></td>
-					<td>${entretien.date}</td>
+					<td><a href="<%=request.getContextPath()%>/entretien/detail?id=${entretien.id}">${entretien.date}</a></td>
+					<td>${entretien.commentaire}</td>
 				</tr>
 			</c:forEach>
 		</table>

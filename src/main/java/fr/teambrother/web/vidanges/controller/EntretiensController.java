@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.teambrother.web.vidanges.bean.Entretien;
@@ -39,4 +40,11 @@ public class EntretiensController {
 		return mav;
 	}
 
+	@RequestMapping("/entretien/detail")
+	public ModelAndView getEntretien(@RequestParam("id") Long id) {
+		ModelAndView mav = new ModelAndView("entretien/detail");
+		Entretien entretien = entretienDAO.trouver(id);
+		mav.addObject("entretien", entretien);
+		return mav;
+	}
 }
