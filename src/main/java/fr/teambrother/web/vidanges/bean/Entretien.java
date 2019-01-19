@@ -14,4 +14,9 @@ public class Entretien {
 	private Voiture voiture;
 	private String commentaire;
 
+	@Override
+	public String toString() {
+		return date + " " + voiture;
+	}
+
 }
