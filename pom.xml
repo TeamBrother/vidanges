@@ -40,6 +40,11 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/ma
 			<version>1.18.4</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.0</version>
+		</dependency>
 		<!-- Test scope -->
 		<dependency>
 	        <groupId>org.junit.jupiter</groupId>
