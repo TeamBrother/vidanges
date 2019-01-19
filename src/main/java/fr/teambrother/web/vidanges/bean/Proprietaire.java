@@ -21,4 +21,9 @@ public class Proprietaire {
 	private String prenom;
 	private String adresse;
 
+	@Override
+	public String toString() {
+		return prenom + " " + nom;
+	}
+
 }

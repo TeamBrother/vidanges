@@ -13,4 +13,9 @@ public class Voiture {
 	private String modele;
 	private Proprietaire proprietaire;
 
+	@Override
+	public String toString() {
+		return marque + " " + modele + " (" + proprietaire + ")";
+	}
+
 }

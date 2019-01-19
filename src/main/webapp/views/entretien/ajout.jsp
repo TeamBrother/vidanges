@@ -17,7 +17,7 @@
 					<label for="idVoiture">ID Voiture</label>
 					<select name="idVoiture" id="idVoiture">
 						<c:forEach items="${voitures}" var="voiture">
-							<option value="${voiture.id}">${voiture.marque} ${voiture.modele} (${voiture.proprietaire.nom} ${voiture.proprietaire.prenom})</option>
+							<option value="${voiture.id}">${voiture}</option>
 						</c:forEach>
 					</select>
 				</span><br />

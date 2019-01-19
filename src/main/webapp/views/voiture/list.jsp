@@ -19,7 +19,7 @@
 				<td><a href="<%=request.getContextPath()%>/voiture/detail?id=${voiture.id}">${voiture.marque}</a></td>
 				<td><a href="<%=request.getContextPath()%>/voiture/detail?id=${voiture.id}">${voiture.modele}</a></td>
 				<td>${voiture.couleur}</td>
-				<td><a href="<%=request.getContextPath()%>/proprietaire/detail?id=${voiture.proprietaire.id}">${voiture.proprietaire.nom} ${voiture.proprietaire.prenom}</a></td>
+				<td><a href="<%=request.getContextPath()%>/proprietaire/detail?id=${voiture.proprietaire.id}">${voiture.proprietaire}</a></td>
 				</tr>
 			</c:forEach>
 		</table>

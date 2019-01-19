@@ -9,16 +9,14 @@
 		<jsp:include page="/views/include/header.jsp" />
 		<table>
 			<tr>
-				<th>ID</th>
 				<th>Nom</th>
 				<th>Prénom</th>
 				<th>Adresse</th>
 			</tr>
 			<c:forEach items="${proprietaires}" var="proprietaire">
 				<tr>
-					<td><a href="<%=request.getContextPath()%>/proprietaire/detail?id=${proprietaire.id}">${proprietaire.id}</a></td>
-					<td>${proprietaire.nom}</td>
-					<td>${proprietaire.prenom}</td>
+					<td><a href="<%=request.getContextPath()%>/proprietaire/detail?id=${proprietaire.id}">${proprietaire.nom}</a></td>
+					<td><a href="<%=request.getContextPath()%>/proprietaire/detail?id=${proprietaire.id}">${proprietaire.prenom}</a></td>
 					<td>${proprietaire.adresse}</td>
 				</tr>
 			</c:forEach>
