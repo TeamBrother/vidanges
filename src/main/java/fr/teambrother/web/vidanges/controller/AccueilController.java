@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Classe contrôleur qu gère mes url de base
+ * Classe contrï¿½leur qu gï¿½re mes url de base
  * 
  * @author chinjto
  * @version 1.0
@@ -17,8 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AccueilController {
 
+	private static final String MENU = "accueil";
+
 	/**
-	 * Méthode qui traite l'url "/"
+	 * Mï¿½thode qui traite l'url "/"
 	 * 
 	 * @param name
 	 * @return
@@ -26,6 +28,7 @@ public class AccueilController {
 	@RequestMapping("/")
 	public ModelAndView getAccueil(String name) {
 		ModelAndView mav = new ModelAndView("home");
+		mav.addObject("menu", MENU);
 		return mav;
 	}
 

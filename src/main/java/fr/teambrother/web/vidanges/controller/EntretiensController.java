@@ -19,7 +19,7 @@ import fr.teambrother.web.vidanges.dao.EntretienDAO;
 import fr.teambrother.web.vidanges.dao.VoitureDAO;
 
 /**
- * Classe contrôleur qu gère mes url de base
+ * Classe contrï¿½leur qu gï¿½re mes url de base
  * 
  * @author chinjto
  * @version 1.0
@@ -27,6 +27,8 @@ import fr.teambrother.web.vidanges.dao.VoitureDAO;
  */
 @Controller
 public class EntretiensController {
+
+	private static final String MENU = "entretien";
 
 	@Autowired
 	private EntretienDAO entretienDAO;
@@ -50,6 +52,7 @@ public class EntretiensController {
 			return mav;
 		} else {
 			ModelAndView mav = new ModelAndView("entretien/ajout");
+			mav.addObject("menu", MENU);
 			mav.addObject("date", date);
 			mav.addObject("idVoiture", idVoiture);
 			mav.addObject("commentaire", commentaire);
@@ -61,6 +64,7 @@ public class EntretiensController {
 	@RequestMapping("/entretien/list")
 	public ModelAndView getEntretiens() {
 		ModelAndView mav = new ModelAndView("entretien/list");
+		mav.addObject("menu", MENU);
 		List<Entretien> entretiens = entretienDAO.lister();
 		mav.addObject("entretiens", entretiens);
 		return mav;
@@ -69,6 +73,7 @@ public class EntretiensController {
 	@RequestMapping("/entretien/detail")
 	public ModelAndView getEntretien(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView("entretien/detail");
+		mav.addObject("menu", MENU);
 		Entretien entretien = entretienDAO.trouver(id);
 		mav.addObject("entretien", entretien);
 		return mav;
@@ -83,4 +88,5 @@ public class EntretiensController {
 		mav.addObject("entretien", entretien);
 		return mav;
 	}
+
 }

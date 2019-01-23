@@ -18,7 +18,7 @@ import fr.teambrother.web.vidanges.dao.ProprietaireDAO;
 import fr.teambrother.web.vidanges.dao.VoitureDAO;
 
 /**
- * Classe contrôleur qu gère les url de base
+ * Classe contrï¿½leur qu gï¿½re les url de base
  * 
  * 
  * @version 1.0
@@ -26,6 +26,8 @@ import fr.teambrother.web.vidanges.dao.VoitureDAO;
  */
 @Controller
 public class ProprietaireController {
+
+	private static final String MENU = "proprietaire";
 
 	@Autowired
 	private ProprietaireDAO proprietaireDAO;
@@ -36,6 +38,7 @@ public class ProprietaireController {
 	@RequestMapping("/proprietaire/list")
 	public ModelAndView getProprietaires() {
 		ModelAndView mav = new ModelAndView("proprietaire/list");
+		mav.addObject("menu", MENU);
 		List<Proprietaire> proprietaires = proprietaireDAO.lister();
 		mav.addObject("proprietaires", proprietaires);
 		return mav;
@@ -44,6 +47,7 @@ public class ProprietaireController {
 	@RequestMapping("/proprietaire/detail")
 	public ModelAndView getProprietaire(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView("proprietaire/detail");
+		mav.addObject("menu", MENU);
 		Proprietaire proprietaire = proprietaireDAO.trouver(id);
 		List<Voiture> voitures = voitureDAO.listerParProprietaire(proprietaire);
 		mav.addObject("proprietaire", proprietaire);

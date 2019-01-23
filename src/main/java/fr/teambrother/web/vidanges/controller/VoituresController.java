@@ -17,7 +17,7 @@ import fr.teambrother.web.vidanges.dao.EntretienDAO;
 import fr.teambrother.web.vidanges.dao.VoitureDAO;
 
 /**
- * Classe contrôleur qu gère mes url de base
+ * Classe contrï¿½leur qu gï¿½re mes url de base
  * 
  * @author chinjto
  * @version 1.0
@@ -25,6 +25,8 @@ import fr.teambrother.web.vidanges.dao.VoitureDAO;
  */
 @Controller
 public class VoituresController {
+
+	private static final String MENU = "voiture";
 
 	@Autowired
 	private VoitureDAO voitureDAO;
@@ -35,6 +37,7 @@ public class VoituresController {
 	@RequestMapping("/voiture/list")
 	public ModelAndView getVoitures() {
 		ModelAndView mav = new ModelAndView("voiture/list");
+		mav.addObject("menu", MENU);
 		List<Voiture> voitures = voitureDAO.lister();
 		mav.addObject("voitures", voitures);
 		return mav;
@@ -43,6 +46,7 @@ public class VoituresController {
 	@RequestMapping("/voiture/detail")
 	public ModelAndView getVoiture(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView("voiture/detail");
+		mav.addObject("menu", MENU);
 		Voiture voiture = voitureDAO.trouver(id);
 		List<Entretien> entretiens = entretienDao.listerParVoiture(voiture);
 		mav.addObject("voiture", voiture);
