@@ -24,7 +24,7 @@ import fr.teambrother.web.vidanges.dao.VoitureDAO;
  *
  */
 @Controller
-public class VoituresController {
+public class VoitureController {
 
 	private static final String MENU = "voiture";
 

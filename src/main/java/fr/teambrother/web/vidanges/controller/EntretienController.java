@@ -4,7 +4,6 @@
 package fr.teambrother.web.vidanges.controller;
 
 import java.util.Date;
-import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +14,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import fr.teambrother.web.vidanges.bean.Entretien;
 import fr.teambrother.web.vidanges.bean.Voiture;
-import fr.teambrother.web.vidanges.dao.EntretienDAO;
 import fr.teambrother.web.vidanges.dao.VoitureDAO;
+import fr.teambrother.web.vidanges.repository.EntretienRepository;
 
-/**
- * Classe contr�leur qu g�re mes url de base
- * 
- * @author chinjto
- * @version 1.0
- *
- */
 @Controller
-public class EntretiensController {
+public class EntretienController {
 
 	private static final String MENU = "entretien";
 
 	@Autowired
-	private EntretienDAO entretienDAO;
+	private EntretienRepository entretienRepository;
 
 	@Autowired
 	private VoitureDAO voitureDAO;
@@ -47,7 +39,7 @@ public class EntretiensController {
 			Voiture voiture = new Voiture();
 			voiture.setId(Long.valueOf(idVoiture));
 			entretien.setVoiture(voiture);
-			entretienDAO.creer(entretien);
+			entretienRepository.save(entretien);
 			ModelAndView mav = new ModelAndView("redirect:/entretien/detail?id=" + entretien.getId());
 			return mav;
 		} else {
@@ -65,7 +57,7 @@ public class EntretiensController {
 	public ModelAndView getEntretiens() {
 		ModelAndView mav = new ModelAndView("entretien/list");
 		mav.addObject("menu", MENU);
-		List<Entretien> entretiens = entretienDAO.lister();
+		Iterable<Entretien> entretiens = entretienRepository.findAll();
 		mav.addObject("entretiens", entretiens);
 		return mav;
 	}
@@ -74,7 +66,7 @@ public class EntretiensController {
 	public ModelAndView getEntretien(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView("entretien/detail");
 		mav.addObject("menu", MENU);
-		Entretien entretien = entretienDAO.trouver(id);
+		Entretien entretien = entretienRepository.findOne(id);
 		mav.addObject("entretien", entretien);
 		return mav;
 	}
@@ -84,7 +76,7 @@ public class EntretiensController {
 		ModelAndView mav = new ModelAndView("redirect:/entretien/list");
 		Entretien entretien = new Entretien();
 		entretien.setId(id);
-		entretienDAO.supprimer(entretien);
+		entretienRepository.delete(entretien);
 		mav.addObject("entretien", entretien);
 		return mav;
 	}
