@@ -66,7 +66,7 @@ public class EntretienController {
 	public ModelAndView getEntretien(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView("entretien/detail");
 		mav.addObject("menu", MENU);
-		Entretien entretien = entretienRepository.findOne(id);
+		Entretien entretien = entretienRepository.findById(id).get();
 		mav.addObject("entretien", entretien);
 		return mav;
 	}
