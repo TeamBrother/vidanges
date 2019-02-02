@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(basePackages = {"fr.teambrother.web.vidanges"})
-@EnableJpaRepositories
+@ComponentScan(basePackages = { "fr.teambrother.web.vidanges" })
+@EnableJpaRepositories(basePackages = { "fr.teambrother.web.vidanges.repository" })
 public class PersistenceJPAConfig {
 
 	@Bean
@@ -38,8 +38,13 @@ public class PersistenceJPAConfig {
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/vidange");
+		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		String url = "jdbc:mysql://localhost:3306/vidange";
+		url += "?useUnicode=true";
+		url += "&useJDBCCompliantTimezoneShift=true";
+		url += "&useLegacyDatetimeCode=false";
+		url += "&serverTimezone=UTC";
+		dataSource.setUrl(url);
 		dataSource.setUsername("root");
 		dataSource.setPassword("password");
 		return dataSource;
@@ -59,7 +64,7 @@ public class PersistenceJPAConfig {
 
 	Properties additionalProperties() {
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
 		properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 		return properties;
 	}

@@ -14,8 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import fr.teambrother.web.vidanges.bean.Entretien;
 import fr.teambrother.web.vidanges.bean.Voiture;
-import fr.teambrother.web.vidanges.dao.VoitureDAO;
 import fr.teambrother.web.vidanges.repository.EntretienRepository;
+import fr.teambrother.web.vidanges.repository.VoitureRepository;
 
 @Controller
 public class EntretienController {
@@ -26,7 +26,7 @@ public class EntretienController {
 	private EntretienRepository entretienRepository;
 
 	@Autowired
-	private VoitureDAO voitureDAO;
+	private VoitureRepository voitureRepository;
 
 	@RequestMapping("/entretien/ajout")
 	public ModelAndView setEntretien(@RequestParam(value = "date", required = false) String date,
@@ -48,7 +48,7 @@ public class EntretienController {
 			mav.addObject("date", date);
 			mav.addObject("idVoiture", idVoiture);
 			mav.addObject("commentaire", commentaire);
-			mav.addObject("voitures", voitureDAO.lister());
+			mav.addObject("voitures", voitureRepository.findAll());
 			return mav;
 		}
 	}

@@ -15,3 +15,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 	}
 
 }
+
+//@Configuration
+//@EnableWebMvc
+//public class WebConfig implements WebMvcConfigurer {
+//
+//	@Override
+//	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+//	}
+//
+//}

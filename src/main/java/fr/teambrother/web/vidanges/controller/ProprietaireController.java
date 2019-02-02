@@ -4,8 +4,6 @@
  */
 package fr.teambrother.web.vidanges.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.teambrother.web.vidanges.bean.Proprietaire;
-import fr.teambrother.web.vidanges.bean.Voiture;
-import fr.teambrother.web.vidanges.dao.ProprietaireDAO;
-import fr.teambrother.web.vidanges.dao.VoitureDAO;
+import fr.teambrother.web.vidanges.repository.ProprietaireRepository;
+import fr.teambrother.web.vidanges.repository.VoitureRepository;
 
 /**
  * Classe contr�leur qu g�re les url de base
@@ -30,17 +27,16 @@ public class ProprietaireController {
 	private static final String MENU = "proprietaire";
 
 	@Autowired
-	private ProprietaireDAO proprietaireDAO;
+	private ProprietaireRepository proprietaireRepository;
 
 	@Autowired
-	private VoitureDAO voitureDAO;
+	private VoitureRepository voitureRepository;
 
 	@RequestMapping("/proprietaire/list")
 	public ModelAndView getProprietaires() {
 		ModelAndView mav = new ModelAndView("proprietaire/list");
 		mav.addObject("menu", MENU);
-		List<Proprietaire> proprietaires = proprietaireDAO.lister();
-		mav.addObject("proprietaires", proprietaires);
+		mav.addObject("proprietaires", proprietaireRepository.findAll());
 		return mav;
 	}
 
@@ -48,10 +44,9 @@ public class ProprietaireController {
 	public ModelAndView getProprietaire(@RequestParam("id") Long id) {
 		ModelAndView mav = new ModelAndView("proprietaire/detail");
 		mav.addObject("menu", MENU);
-		Proprietaire proprietaire = proprietaireDAO.trouver(id);
-		List<Voiture> voitures = voitureDAO.listerParProprietaire(proprietaire);
+		Proprietaire proprietaire = proprietaireRepository.findById(id).get();
 		mav.addObject("proprietaire", proprietaire);
-		mav.addObject("voitures", voitures);
+		mav.addObject("voitures", voitureRepository.findByProprietaire(proprietaire));
 		return mav;
 	}
 
