@@ -77,7 +77,6 @@ public class EntretienController {
 		Entretien entretien = new Entretien();
 		entretien.setId(id);
 		entretienRepository.delete(entretien);
-		mav.addObject("entretien", entretien);
 		return mav;
 	}
 
